@@ -1,0 +1,11 @@
+import datetime
+
+date_input = input("Enter the date (mm/dd/yyyy): ")
+date_parts = date_input.split("/")
+
+month = int(date_parts[0])
+day = int(date_parts[1])
+year = int(date_parts[2])
+
+date_obj = datetime.datetime(year, month, day)
+print('{:%B %d, %Y}'.format(date_obj))
