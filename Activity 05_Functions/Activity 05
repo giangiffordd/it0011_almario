@@ -1,0 +1,64 @@
+def perform_division(first_num, second_num):
+    if second_num == 0:
+        print("Error: Cannot divide by zero.")
+        return None
+    return first_num / second_num
+
+def calculate_power(base, exponent):
+    result = base ** exponent
+    return result
+
+def get_remainder(dividend, divisor):
+    if divisor == 0:
+        print("Error: Cannot find remainder with zero divisor.")
+        return None
+    return dividend % divisor
+
+def calculate_sum_between(start, end):
+    if start > end:
+        print("Error: End number must be greater than or equal to start number.")
+        return None
+    
+    total = 0
+    for number in range(start, end + 1):
+        total += number
+    return total
+
+def run_calculator():
+    while True:
+        print("\nSelect a Mathematical Operation:")
+        print("[D] - Divide")
+        print("[E] - Exponentiation")
+        print("[R] - Remainder")
+        print("[F] - Summation")
+        print("[Q] - Quit")
+        
+        operation = input("Enter your choice: ").upper().strip()
+        
+        if operation == 'Q':
+            print("Program terminated.")
+            break
+        
+        if operation in ['D', 'E', 'R', 'F']:
+            try:
+                first_value = int(input("Enter first number: "))
+                second_value = int(input("Enter second number: "))
+                
+                if operation == 'D':
+                    answer = perform_division(first_value, second_value)
+                elif operation == 'E':
+                    answer = calculate_power(first_value, second_value)
+                elif operation == 'R':
+                    answer = get_remainder(first_value, second_value)
+                elif operation == 'F':
+                    answer = calculate_sum_between(first_value, second_value)
+                
+                if answer is not None:
+                    print(f"Result: {answer}")
+            except ValueError:
+                print("Error: Please enter valid numbers.")
+        else:
+            print("Invalid selection. Please choose a valid option.")
+
+if __name__ == "__main__":
+    run_calculator()
