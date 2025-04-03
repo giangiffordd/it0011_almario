@@ -1,0 +1,134 @@
+class Product:  
+    def __init__(self, product_id, name, description, price):  
+        self.product_id = product_id
+        self.name = name
+        self.description = description
+        self.price = price
+
+    def __str__(self):  
+        return f"ID: {self.product_id}\nName: {self.name}\nDescription: {self.description}\nPrice: ₱{self.price:.2f}\n"
+
+
+def validate_integer(prompt):  
+    while True:
+        try:
+            value = int(input(prompt))
+            if value < 0:
+                print("Error: Please enter a positive integer.")  
+            else:
+                return value
+        except ValueError:
+            print("Error: Input must be an integer.")  
+
+def validate_float(prompt):  
+        try:
+            value = float(input(prompt))
+            if value < 0:
+                print("Error: Please enter a positive number.")  
+            else:
+                return value
+        except ValueError:
+            print("Error: Input must be a number.")  
+
+
+def validate_string(prompt):  
+    while True:
+        value = input(prompt).strip()
+        if not value:  
+            print("Error: Input cannot be empty.")  
+        else:
+            return value
+
+
+def add_product(inventory):  
+    print("\n=== Add New Product ===")  
+    product_id = validate_integer("Enter product ID: ")  
+
+    # Check for duplicate ID
+    for product in inventory:
+        if product.product_id == product_id:
+            print("Error: A product with this ID already exists.") 
+            return
+
+    name = validate_string("Enter product name: ")
+    description = validate_string("Enter product description: ")
+    price = validate_float("Enter product price (₱): ")  
+
+    new_product = Product(product_id, name, description, price)
+    inventory.append(new_product)
+    print(f"Success! Product '{name}' has been added to inventory.")  
+
+def display_products(inventory):  
+    print("\n=== Product Inventory ===") 
+    if len(inventory) == 0:  
+        print("Inventory is empty.") 
+        return
+    
+    for product in inventory:
+        print(product)
+
+
+def modify_product(inventory):  
+    print("\n=== Update Product Details ===")  
+    product_id = validate_integer("Enter ID of product to update: ")  
+
+    # Find product with matching ID
+    for product in inventory:
+        if product.product_id == product_id:
+            print(f"Updating product: {product.name}")  
+            name = validate_string(f"New name (current: {product.name}): ") 
+            description = validate_string(f"New description (current: {product.description}): ")  
+            price = validate_float(f"New price (current: ₱{product.price:.2f}): ") 
+
+            product.name = name
+            product.description = description
+            product.price = price
+            print(f"Product ID {product_id} updated successfully.") 
+            return
+
+    print(f"Error: No product found with ID {product_id}")  
+
+
+def remove_product(inventory): 
+    print("\n=== Remove Product ===")  
+    product_id = validate_integer("Enter ID of product to remove: ")  
+
+    for index, product in enumerate(inventory):
+        if product.product_id == product_id:
+            removed = inventory.pop(index)  
+            print(f"Product '{removed.name}' (ID: {product_id}) removed successfully.") 
+            return
+
+    print(f"Error: No product found with ID {product_id}")  
+
+
+def main():
+    inventory = []
+    while True:
+        print("\n===== Inventory Management System =====")  
+        print("1. Add Product")  
+        print("2. Display Inventory")
+        print("3. Update Product")
+        print("4. Remove Product")
+        print("5. Exit Program")
+        print("=====================================")
+
+        choice = input("Select an option (1-5): ") 
+
+        if choice == "1":
+            add_product(inventory)
+        elif choice == "2":
+            display_products(inventory)
+        elif choice == "3":
+            modify_product(inventory)
+        elif choice == "4":
+            remove_product(inventory)
+        elif choice == "5":
+            print("Thank you for using the Inventory Management System. Goodbye!") 
+            break
+        else:
+            print("Invalid selection. Please choose an option between 1-5.") 
+
+
+if __name__ == "__main__":
+    main()
